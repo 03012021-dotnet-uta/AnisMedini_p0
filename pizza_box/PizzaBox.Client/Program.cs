@@ -156,7 +156,7 @@ namespace PizzaBox.Client{
             System.Console.WriteLine("1 - FlatBread + $"+priceFlatbread );
             System.Console.WriteLine("2 - CheeseStuffed + $"+priceCheeseStuffed);
             System.Console.WriteLine("3 - Sicillian + $"+priceSicillian);
-            System.Console.WriteLine("4 - Exit ");
+            System.Console.WriteLine("4 - Back ");
             var input5 = Console.ReadLine();
             if  (int.Parse(input5) == 1 || int.Parse(input5)==2 || int.Parse(input5)==3 || int.Parse(input5)==4){
 
@@ -338,6 +338,7 @@ namespace PizzaBox.Client{
                 "\tTotal paid: $"+pizza.Price
                 );
                 System.Console.WriteLine("------------------------------------------");
+
             } else {
                 System.Console.WriteLine("Sorry could'nt find a match");
             }
