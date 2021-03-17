@@ -7,6 +7,9 @@ using PizzaBox.Storing;
 namespace PizzaBox.Client
 {
     class Program{
+            static private readonly string _path = @"store.xml";
+            static private readonly string PizzaPath = @"pizza.xml";
+            static private readonly string OrderPath = @"order.xml";
             static Store store = new Store();
             static Pizza pizza = new Pizza();
             static Order orders = new Order();
@@ -24,14 +27,27 @@ namespace PizzaBox.Client
             customers.Add(customer);
 
             var fs = new FileStorage();
-            fs.WriteToXml<Store>(stores);
+            fs.WriteToXml<Store>(stores,_path);
 
 
-            fs.WriteToOrderXml<Customer>(customers);
+            fs.WriteToXml<Customer>(customers,OrderPath);
 
 
-            fs.WriteToPizzaXml<Pizza>(pizzas);
-            System.Console.WriteLine("SIZE = "+ pizza.Size);
+            fs.WriteToXml<Pizza>(pizzas,PizzaPath);
+
+            foreach (var item in fs.ReadFromXml<Store>(_path)){
+                    System.Console.WriteLine("The store you picked is => "+ item.Name);
+            }
+            foreach (var item in fs.ReadFromXml<Customer>(OrderPath)){
+                    System.Console.WriteLine("The store you picked is => "+ item.CustomerName);
+            }
+            foreach (var item in fs.ReadFromXml<Pizza>(PizzaPath)){
+                    System.Console.WriteLine("The Pizza you picked => "+ item.PizzaName);
+                    System.Console.WriteLine("The Size you picked => "+ item.Size);
+                    System.Console.WriteLine("The Crust you picked => "+ item.Crust);
+                    System.Console.WriteLine("-----------------------------");
+                    System.Console.WriteLine("Total Price => $"+ item.Price);
+            }
 
         }
         public static void createName(){
