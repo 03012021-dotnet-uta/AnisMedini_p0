@@ -7,9 +7,7 @@ namespace PizzaBox.Domain
         public List<Pizza> Pizzas { get; set; }
 
         public override string ToString(){
-            // foreach (var pizza in Pizzas){
-            //         System.Console.WriteLine(pizza);
-            // }
+
             return "Your Pizza = " + Pizzas;
         }
 

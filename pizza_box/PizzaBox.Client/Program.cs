@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using PizzaBox.Domain;
 using PizzaBox.Storing;
 
-namespace PizzaBox.Client
-{
+namespace PizzaBox.Client{
     class Program{
             static private readonly string _path = @"store.xml";
             static private readonly string PizzaPath = @"pizza.xml";
@@ -14,7 +13,6 @@ namespace PizzaBox.Client
             static Pizza pizza = new Pizza();
             static Order orders = new Order();
             static Customer customer = new Customer();
-
             static List<Store> stores = new List<Store>();
             static List<Pizza> pizzas = new List<Pizza>();
             static List<Customer> customers = new List<Customer>();
@@ -22,19 +20,19 @@ namespace PizzaBox.Client
             createName();
             printSelectStore();
             printSelectionMenu();
+            // Adding all the information to a list
             stores.Add(store);
             pizzas.Add(pizza);
             customers.Add(customer);
 
             var fs = new FileStorage();
+
+            // Saving all the information to a file with a specific path
             fs.WriteToXml<Store>(stores,_path);
-
-
             fs.WriteToXml<Customer>(customers,OrderPath);
-
-
             fs.WriteToXml<Pizza>(pizzas,PizzaPath);
 
+                // Printing All the information about the store /Customer/ Pizza
             foreach (var item in fs.ReadFromXml<Store>(_path)){
                     System.Console.WriteLine("The store you picked is => "+ item.Name);
             }
@@ -51,10 +49,14 @@ namespace PizzaBox.Client
 
         }
         public static void createName(){
+            System.Console.WriteLine("------Welcome to you Pizza Store-------");
             System.Console.WriteLine("Please enter your name: ");
             var name = Console.ReadLine();
+            System.Console.WriteLine("Please enter your Email: ");
+            var email = Console.ReadLine();
             customer = new Customer(){
-                CustomerName = name
+                CustomerName = name,
+                CustomerEmail = email,
             };
         }
         public static void printSelectionMenu(){
@@ -63,10 +65,11 @@ namespace PizzaBox.Client
             Console.WriteLine("2- Select Size  ");
             Console.WriteLine("3- Select Crust  ");
             Console.WriteLine("4- Select Toppings  ");
-            Console.WriteLine("5- Save & Exit  ");
+            Console.WriteLine("5- View Order History  ");
+            Console.WriteLine("6- Save & Exit  ");
 
             var input2 = Console.ReadLine();
-            if  (int.Parse(input2) == 1 || int.Parse(input2)==2 || int.Parse(input2)==3 || int.Parse(input2)==4|| int.Parse(input2)==5){
+            if  (int.Parse(input2) == 1 || int.Parse(input2)==2 || int.Parse(input2)==3 || int.Parse(input2)==4|| int.Parse(input2)==5|| int.Parse(input2)==6){
             switch (int.Parse(input2)){
                 case 1:
                 pizzaSelection();
@@ -84,6 +87,10 @@ namespace PizzaBox.Client
                 printSelectionMenu();
                 break;
                 case 5:
+                orderHistory();
+                printSelectionMenu();
+                break;
+                case 6:
                 break;
 
             }
@@ -92,6 +99,7 @@ namespace PizzaBox.Client
             }
         }
         private static void toppingSelection(){
+
             var priceOlives = 2;
             var priceExtraCheese = 3;
             var priceGreenPepper = 4;
@@ -316,6 +324,20 @@ namespace PizzaBox.Client
            }
             } else{
                 pizzaSelection();
+            }
+        }
+        static void orderHistory(){
+            System.Console.WriteLine("Enter Email or Name: ");
+            var input = Console.ReadLine();
+            if(input.Equals(customer.CustomerEmail) || input.Equals(customer.CustomerName)){
+                System.Console.WriteLine("\tName: "+ customer.CustomerName+"\nEmail: "+ customer.CustomerEmail);
+                System.Console.WriteLine("\tOrderd "+ pizza.PizzaName +" in "+ store.Name+
+                "\t"+pizza.Size + "\n"+
+                "\t"+pizza.Crust + "\n"+
+                "\tTotal paid: $"+pizza.Price
+                );
+            } else {
+                System.Console.WriteLine("Sorry could'nt find a match");
             }
         }
     }
