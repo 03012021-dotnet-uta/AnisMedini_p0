@@ -206,21 +206,21 @@ namespace PizzaBox.Client{
                     pizza = new Pizza(){
                         PizzaName = pizza.PizzaName,
                         Price = pizza.Price + priceSM,
-                        Size = "Small"
+                        Size = "Small",
                     };
                     break;
                 case 2:
                     pizza = new Pizza(){
                         PizzaName = pizza.PizzaName,
                         Price = pizza.Price + priceME,
-                        Size = "Medium"
+                        Size = "Medium",
                     };
                     break;
                 case 3:
                     pizza = new Pizza(){
                         PizzaName = pizza.PizzaName,
                         Price = pizza.Price + priceLA,
-                        Size ="Small"
+                        Size ="Small",
                     };
                 break;
                 case 4:
@@ -330,12 +330,14 @@ namespace PizzaBox.Client{
             System.Console.WriteLine("Enter Email or Name: ");
             var input = Console.ReadLine();
             if(input.Equals(customer.CustomerEmail) || input.Equals(customer.CustomerName)){
-                System.Console.WriteLine("\tName: "+ customer.CustomerName+"\nEmail: "+ customer.CustomerEmail);
-                System.Console.WriteLine("\tOrderd "+ pizza.PizzaName +" in "+ store.Name+
+                System.Console.WriteLine("------------------------------------------");
+                System.Console.WriteLine("\tName: "+ customer.CustomerName+" Email: "+ customer.CustomerEmail);
+                System.Console.WriteLine("\tOrderd: "+ pizza.PizzaName +" in "+ store.Name+"\n"+
+                "\t"+pizza.Crust +
                 "\t"+pizza.Size + "\n"+
-                "\t"+pizza.Crust + "\n"+
                 "\tTotal paid: $"+pizza.Price
                 );
+                System.Console.WriteLine("------------------------------------------");
             } else {
                 System.Console.WriteLine("Sorry could'nt find a match");
             }
