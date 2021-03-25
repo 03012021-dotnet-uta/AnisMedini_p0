@@ -9,6 +9,20 @@
       body {
         background-color: aquamarine;
       }
+      header {
+        border: 3px solid;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        background-color: coral;
+      }
+      .explain {
+        width: 60%;
+        margin: auto;
+        font-size: large;
+      }
+      .forming {
+        margin-top: 40px;
+      }
       #myForm {
         text-align: center;
       }
@@ -27,9 +41,17 @@
         font-size: medium;
         border-radius: 20px;
       }
+      #rest {
+        align-items: center;
+        display: block;
+        margin: auto;
+        padding: 6px;
+        border-radius: 20px;
+      }
       #btn:hover {
         background-color: coral;
       }
+
       label {
         font-size: 27px;
         text-shadow: 20px;
@@ -38,50 +60,86 @@
         text-align: center;
         font-size: large;
       }
+      .myy {
+        display: block;
+      }
     </style>
   </head>
 
   <body>
     <!-- HTML -->
+    <!-- Main Screen  -->
     <div id="myForm">
-      <h1>Welcome to the Sweet and Salty Game</h1>
-      <h3>Please select your start point and end point</h3>
-      <label for="start"> Start Number </label>
-      <input type="number" id="start" name="start" />
-      <label for="end">End Number </label>
-      <input type="end" id="end" name="end" />
-      <label for="rows">Per Line Number </label>
-      <input type="rows" id="rows" name="rows" />
-      <input type="submit" id="btn" value="Click here to see the result" />
+      <header>
+        <h1>Welcome to the Sweet and Salty Game</h1>
+      </header>
+      <p class="explain">
+        Please select your Start Point and End Point and how many number you
+        want to be displayed in one line The Program will iterate between your
+        Star point and your endpoints and if he finds any number divisible by 3
+        and 5 it will print "Sweet'nSalty" if the number is only divisible by 3
+        it will print "Sweet" and if the number is divisble by 5 it will print
+        "Salty" to the screen
+      </p>
+      <!-- our label and input -->
+      <div class="forming">
+        <label for="start"> Start Number </label>
+        <input type="number" id="start" name="start" />
+        <label for="end">End Number </label>
+        <input type="end" id="end" name="end" />
+        <label for="rows">Per Line Number </label>
+        <input type="rows" id="rows" name="rows" />
+        <input type="submit" id="btn" value="Click here to see the result" />
+      </div>
     </div>
     <p id="count"></p>
 
+    <!-- Displaying the result -->
     <div class="contentPara">
+      <button onclick="window.location.reload()" id="rest">RESET</button>
       <p class="content" id="my"></p>
     </div>
 
     <script>
+      // javascript
+      // gettinh the value of rows
       let rows = Number(document.getElementById("rows").value);
+      // getting the variable .content class to display the result
       let el = document.querySelector(".content");
+
       let myHTML = "";
 
+      // the program will call this function when clicked on the button
       function valid() {
         let start = Number(document.getElementById("start").value);
+        let rows = parseInt(document.getElementById("rows").value);
+        if (rows == 0) {
+          rows = (start - end) / 100;
+        }
+
         let end = Number(document.getElementById("end").value);
+        // if too small display error message
         if (end - start < 200) {
           el.innerHTML = "200 DIFFERENCE REQUIRED BETWEEN TWO NUMBER";
           document.getElementById("myForm").style.display = "none";
           document.getElementById("my").style.backgroundColor = "red";
+          document.getElementById("reset").classList.add("myy");
+          // if too big display error message
         } else if (end - start > 10000) {
           el.innerHTML = "10000 IS THE MAXIMUN DIFFERENCE ALLOWED";
           document.getElementById("myForm").style.display = "none";
           document.getElementById("my").style.backgroundColor = "red";
+          document.getElementById("reset").classList.add("myy");
+          // if evertying is fine displaying the result
         } else {
           mainFunction();
+          document.getElementById("my").style.width = (rows * 100) / 1.7 + "px";
           document.getElementById("myForm").style.display = "none";
+          document.getElementById("reset").classList.add("myy");
         }
       }
 
+      // the function above will call this function if all the input are valid
       function mainFunction() {
         var count = document.getElementById("count");
         var start = Number(document.getElementById("start").value);
@@ -89,28 +147,27 @@
         var rows = Number(document.getElementById("rows").value);
         var el = document.querySelector(".content");
 
-        sweeAndSalty = 0;
-        sweet = 0;
-        salty = 0;
         let myHTML = "";
         let myBreak = "";
+        // creating a for loop going from start to end
         for (let i = start; i < end; i++) {
+          // checking for number id it's divisible by 3 and 5
           if ((i % 3 && i % 5) == 0) {
-            myHTML += " Sweet and Salty ";
-            sweeAndSalty++;
+            myHTML += " Sweet'nSalty ";
+            // checking for number id it's divisible by 3
           } else if (i % 3 == 0) {
             myHTML += " Sweet ";
-            sweet++;
+            // checking for number id it's divisible by 5
           } else if (i % 5 == 0) {
             myHTML += " Salty ";
-            salty++;
+            // if none of the condition are met write the number to the screen
           } else {
             myHTML += Number(i).toLocaleString("en-US") + " ";
           }
           el.innerHTML = myHTML;
         }
       }
-
+      // creating an event  once you clicked the button
       document.getElementById("btn").addEventListener("click", valid);
     </script>
   </body>
