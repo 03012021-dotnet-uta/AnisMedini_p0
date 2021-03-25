@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sweet And Salty</title>
+    <style>
+      body {
+        background-color: aquamarine;
+      }
+      #myForm {
+        text-align: center;
+      }
+      #start,
+      #end,
+      #rows {
+        margin: 10px;
+        height: 20px;
+        width: 150px;
+      }
+      #btn {
+        align-items: center;
+        display: block;
+        margin: auto;
+        padding: 10px;
+        font-size: medium;
+        border-radius: 20px;
+      }
+      #btn:hover {
+        background-color: coral;
+      }
+      label {
+        font-size: 27px;
+        text-shadow: 20px;
+      }
+      .contentPara {
+        text-align: center;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HTML -->
+    <div id="myForm">
+      <h1>Welcome to the Sweet and Salty Game</h1>
+      <h3>Please select your start point and end point</h3>
+      <label for="start"> Start Number </label>
+      <input type="number" id="start" name="start" />
+      <label for="end">End Number </label>
+      <input type="end" id="end" name="end" />
+      <label for="rows">Per Line Number </label>
+      <input type="rows" id="rows" name="rows" />
+      <input type="submit" id="btn" value="Click here to see the result" />
+    </div>
+    <p id="count"></p>
+
+    <div class="contentPara">
+      <p class="content" id="my"></p>
+    </div>
+
+    <script>
+      let rows = Number(document.getElementById("rows").value);
+      let el = document.querySelector(".content");
+      let myHTML = "";
+
+      function valid() {
+        let start = Number(document.getElementById("start").value);
+        let end = Number(document.getElementById("end").value);
+        if (end - start < 200) {
+          el.innerHTML = "200 DIFFERENCE REQUIRED BETWEEN TWO NUMBER";
+          document.getElementById("myForm").style.display = "none";
+          document.getElementById("my").style.backgroundColor = "red";
+        } else if (end - start > 10000) {
+          el.innerHTML = "10000 IS THE MAXIMUN DIFFERENCE ALLOWED";
+          document.getElementById("myForm").style.display = "none";
+          document.getElementById("my").style.backgroundColor = "red";
+        } else {
+          mainFunction();
+          document.getElementById("myForm").style.display = "none";
+        }
+      }
+
+      function mainFunction() {
+        var count = document.getElementById("count");
+        var start = Number(document.getElementById("start").value);
+        var end = Number(document.getElementById("end").value);
+        var rows = Number(document.getElementById("rows").value);
+        var el = document.querySelector(".content");
+
+        sweeAndSalty = 0;
+        sweet = 0;
+        salty = 0;
+        let myHTML = "";
+        let myBreak = "";
+        for (let i = start; i < end; i++) {
+          if ((i % 3 && i % 5) == 0) {
+            myHTML += " Sweet and Salty ";
+            sweeAndSalty++;
+          } else if (i % 3 == 0) {
+            myHTML += " Sweet ";
+            sweet++;
+          } else if (i % 5 == 0) {
+            myHTML += " Salty ";
+            salty++;
+          } else {
+            myHTML += Number(i).toLocaleString("en-US") + " ";
+          }
+          el.innerHTML = myHTML;
+        }
+      }
+
+      document.getElementById("btn").addEventListener("click", valid);
+    </script>
+  </body>
+</html>
